@@ -36,8 +36,7 @@ holomorphic — while the classification supplies the description of the underly
   parameters of the composite are supplied abstractly by the group structure rather than by a
   direct computation.
 * `TauCeti.unitDiscAut.isPretransitive` — `Aut(𝔻)` acts transitively on the disc, as the standard
-  `MulAction.IsPretransitive` instance (with `TauCeti.exists_mem_unitDiscAut_apply_eq` the
-  corresponding statement about the ambient permutations).
+  `MulAction.IsPretransitive` instance.
 * `TauCeti.stabilizer_zero_eq_unitDiscRotation_subgroupOf` — the stabiliser of the origin is the
   rotation subgroup `unitDiscRotation`, the image of `Circle` under its action on the disc
   (with `TauCeti.mem_unitDiscRotation_iff` the ambient membership criterion).
@@ -176,19 +175,6 @@ theorem mem_unitDiscAut_iff {e : Equiv.Perm Complex.UnitDisc} :
   · rintro ⟨u, a, rfl⟩
     exact unitDiscStandardAutomorphismEquiv_mem_unitDiscAut u a
 
-/-- The underlying set of `Aut(𝔻)` is the range of the standard parametrisation by a rotation
-and a centre. -/
-theorem coe_unitDiscAut :
-    (unitDiscAut : Set (Equiv.Perm Complex.UnitDisc)) =
-      range fun p : Circle × Complex.UnitDisc => unitDiscStandardAutomorphismEquiv p.1 p.2 := by
-  ext e
-  simp only [SetLike.mem_coe, mem_range, Prod.exists]
-  refine ⟨fun he => ?_, ?_⟩
-  · obtain ⟨u, a, rfl⟩ := mem_unitDiscAut_iff.1 he
-    exact ⟨u, a, rfl⟩
-  · rintro ⟨u, a, rfl⟩
-    exact unitDiscStandardAutomorphismEquiv_mem_unitDiscAut u a
-
 /-- The standard disc automorphisms are closed under composition.
 
 This is a corollary of the group structure and the classification: no computation with the
@@ -214,12 +200,6 @@ instance unitDiscAut.isPretransitive :
     · rw [← unitDiscStandardAutomorphismEquiv_one z]
       exact unitDiscStandardAutomorphismEquiv_mem_unitDiscAut 1 z
     · simp
-
-/-- Transitivity of `Aut(𝔻)` on the disc, phrased for the ambient permutations. -/
-theorem exists_mem_unitDiscAut_apply_eq (z w : Complex.UnitDisc) :
-    ∃ e ∈ unitDiscAut, e z = w :=
-  let ⟨e, he⟩ := MulAction.exists_smul_eq unitDiscAut z w
-  ⟨e, e.2, he⟩
 
 /-- The rotations `z ↦ u * z`, as a subgroup of the permutations of the unit disc.  It is the
 image of `Circle` under its multiplicative action on the disc. -/
